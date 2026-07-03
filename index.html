@@ -108,8 +108,9 @@ nav .wrap{display:flex;justify-content:space-between;align-items:center;padding:
 .hero h1 .yl{color:var(--yellow)}
 .hero p.lead{color:var(--dim);font-size:1.1rem;max-width:46ch;margin-bottom:32px}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
-.ghostbtn{border:2px solid var(--chalk);color:var(--chalk);text-decoration:none;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.95rem;transition:border-color .15s,color .15s}
+.ghostbtn{border:2px solid var(--chalk);color:var(--chalk);text-decoration:none;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.95rem;transition:border-color .15s,color .15s;background:none;cursor:pointer}
 .ghostbtn:hover{border-color:var(--yellow);color:var(--yellow)}
+.ghostbtn.accent{border-color:var(--yellow);color:var(--yellow)}
 .hero-meta{margin-top:34px;display:flex;gap:28px;flex-wrap:wrap;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:.85rem;color:var(--dim)}
 .hero-meta b{display:block;color:var(--chalk);font-size:1.15rem;letter-spacing:.04em}
 
@@ -153,6 +154,8 @@ section{padding:80px 0}
 .signs li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:12px;background:var(--asphalt);transform:skewX(-12deg)}
 .signs .note{margin-top:24px;font-weight:700;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.1em}
 .signs a{color:var(--asphalt)}
+.signs .note button.inline-sched{background:none;border:none;color:var(--asphalt);cursor:pointer;font-family:inherit;font-weight:700;font-size:inherit;padding:0}
+.signs .note-sub{margin-top:6px}
 
 /* visit */
 #visit .visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
@@ -174,6 +177,64 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 /* mobile sticky call */
 .sticky-call{display:none}
 
+/* schedule trigger buttons (paired with call links) */
+.schedbtn{background:transparent;border:2px solid var(--yellow);color:var(--yellow);font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;padding:9px 20px;font-size:.95rem;cursor:pointer;transition:background .15s,color .15s;display:inline-flex;align-items:center;gap:8px}
+.schedbtn:hover{background:var(--yellow);color:var(--asphalt)}
+.schedbtn:focus-visible{outline:3px solid var(--chalk);outline-offset:2px}
+.schedbtn.on-dark{border-color:var(--asphalt);color:var(--asphalt)}
+.schedbtn.on-dark:hover{background:var(--asphalt);color:var(--yellow)}
+.cta-pair{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.tb-sched{background:var(--asphalt);color:var(--yellow);text-decoration:none;font-weight:700;padding:5px 12px;font-size:.85rem;letter-spacing:.04em}
+.tb-sched:hover{background:#000}
+.inline-sched{text-decoration:underline;text-underline-offset:3px;font-weight:700}
+.visit-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px}
+
+/* schedule modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,11,.78);z-index:100;padding:24px;overflow-y:auto;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.modal-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+.modal{background:var(--steel);border:1px solid #3a3d44;max-width:640px;width:100%;margin:auto;box-shadow:0 30px 80px rgba(0,0,0,.6);position:relative;animation:modalIn .18s ease-out}
+@keyframes modalIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.modal::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:var(--hazard)}
+.modal-head{padding:26px 28px 0}
+.modal-close{position:absolute;top:18px;right:18px;background:none;border:none;color:var(--dim);font-size:1.6rem;line-height:1;cursor:pointer;padding:6px}
+.modal-close:hover{color:var(--chalk)}
+.modal-body{padding:20px 28px 28px}
+.sched-step{margin-bottom:26px}
+.sched-step .steplabel{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;color:var(--yellow);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sched-step .steplabel .num{background:var(--yellow);color:var(--asphalt);width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75rem}
+.day-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px}
+.daybtn{background:var(--panel);border:1px solid #3a3d44;color:var(--chalk);padding:10px 6px;text-align:center;cursor:pointer;font-family:'Barlow Condensed',sans-serif;transition:border-color .15s,background .15s}
+.daybtn .dow{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.daybtn .num{display:block;font-family:'Anton',sans-serif;font-size:1.2rem;margin-top:2px}
+.daybtn:hover{border-color:var(--yellow)}
+.daybtn.sel{background:var(--yellow);border-color:var(--yellow)}
+.daybtn.sel .dow,.daybtn.sel .num{color:var(--asphalt)}
+.daybtn:disabled{opacity:.3;cursor:not-allowed}
+.daybtn:disabled:hover{border-color:#3a3d44}
+.slot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.slotbtn{background:var(--panel);border:1px solid #3a3d44;color:var(--chalk);padding:10px 8px;text-align:center;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:600;transition:border-color .15s,background .15s}
+.slotbtn:hover{border-color:var(--yellow)}
+.slotbtn.sel{background:var(--yellow);border-color:var(--yellow);color:var(--asphalt)}
+.sched-confirm{background:rgba(255,196,0,.1);border:1px dashed var(--yellow);padding:12px 16px;font-family:'Barlow Condensed',sans-serif;font-weight:600;margin-top:14px;display:none}
+.sched-confirm.show{display:block}
+.field{margin-bottom:14px}
+.field label{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;color:var(--dim);margin-bottom:6px}
+.field input,.field textarea{width:100%;background:var(--panel);border:1px solid #3a3d44;color:var(--chalk);padding:11px 12px;font-family:'Barlow',sans-serif;font-size:1rem}
+.field input:focus,.field textarea:focus{outline:2px solid var(--yellow);border-color:var(--yellow)}
+.field textarea{resize:vertical;min-height:80px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.submitbtn{background:var(--yellow);color:var(--asphalt);border:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:14px 24px;font-size:1rem;cursor:pointer;width:100%;transition:background .15s}
+.submitbtn:hover{background:#ffd23d}
+.submitbtn:disabled{opacity:.6;cursor:wait}
+.or-divider{display:flex;align-items:center;gap:12px;color:var(--dim);font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem;margin:22px 0}
+.or-divider::before,.or-divider::after{content:"";flex:1;height:1px;background:#3a3d44}
+.emailcta{display:flex;align-items:center;justify-content:center;gap:10px;border:2px solid var(--dim);color:var(--chalk);text-decoration:none;padding:12px 20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.95rem;transition:border-color .15s,color .15s}
+.emailcta:hover{border-color:var(--yellow);color:var(--yellow)}
+.sched-success{display:none;text-align:center;padding:20px 0}
+.sched-success.show{display:block}
+.sched-success .check{font-family:'Anton',sans-serif;font-size:3rem;color:var(--green);line-height:1;margin-bottom:12px}
+.hp-field{position:absolute;left:-9999px}
+
 @media (max-width:900px){
   .hero .wrap{grid-template-columns:1fr;gap:44px;padding-top:60px;padding-bottom:60px}
   .svc-grid{grid-template-columns:1fr 1fr}
@@ -186,7 +247,13 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
   .svc-grid{grid-template-columns:1fr}
   .topbar .tb-right span{display:none}
   body{padding-bottom:64px}
-  .sticky-call{display:block;position:fixed;bottom:0;left:0;right:0;z-index:60;background:var(--yellow);color:var(--asphalt);text-align:center;padding:16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;box-shadow:0 -8px 24px rgba(0,0,0,.4)}
+  .sticky-call{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:60;box-shadow:0 -8px 24px rgba(0,0,0,.4)}
+  .sticky-call a,.sticky-call button{flex:1;text-align:center;padding:16px 8px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;border:none;cursor:pointer}
+  .sticky-call .sc-call{background:var(--yellow);color:var(--asphalt)}
+  .sticky-call .sc-sched{background:var(--asphalt);color:var(--yellow)}
+  .two-col{grid-template-columns:1fr}
+  .modal-overlay{padding:0;align-items:stretch}
+  .modal{max-width:none;min-height:100%;margin:0}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -202,6 +269,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
     <div class="tb-right">
       <span data-en="Mon–Fri 9–6 · Sat 9–3" data-es="Lun–Vie 9–6 · Sáb 9–3">Mon–Fri 9–6 · Sat 9–3</span>
       <span>5590 Locust St, Commerce City</span>
+      <a href="#" class="tb-sched" data-open-schedule data-en="Schedule" data-es="Agendar">Schedule</a>
       <button class="langbtn" id="langToggle" aria-label="Cambiar idioma / Switch language">Español</button>
     </div>
   </div>
@@ -219,7 +287,10 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
       <a href="#signs" data-en="Alignment Check" data-es="Revisión de Alineación">Alignment Check</a>
       <a href="#visit" data-en="Hours &amp; Location" data-es="Horario y Ubicación">Hours &amp; Location</a>
     </div>
-    <a class="callbtn" href="tel:3032893077" data-en="Call Now" data-es="Llame Ahora">Call Now</a>
+    <div class="cta-pair">
+      <a class="callbtn" href="tel:3032893077" data-en="Call Now" data-es="Llame Ahora">Call Now</a>
+      <button type="button" class="schedbtn" data-open-schedule data-en="Schedule" data-es="Agendar">Schedule</button>
+    </div>
   </div>
 </nav>
 
@@ -232,6 +303,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
          data-es="Alineación de autos y camionetas, llantas nuevas y usadas, escape y trabajo mecánico honesto — de un equipo con más de 25 años de experiencia combinada. Sin ventas forzadas. Sin vueltas.">Car and truck wheel alignment, new and used tires, exhaust, and honest mechanic work — from a crew with over 25 years of combined experience. No upsells. No runaround.</p>
       <div class="hero-ctas">
         <a class="callbtn" href="tel:3032893077" data-en="Call (303) 289-3077" data-es="Llame (303) 289-3077">Call (303) 289-3077</a>
+        <button type="button" class="ghostbtn accent" data-open-schedule data-en="Schedule Appointment" data-es="Agendar Cita">Schedule Appointment</button>
         <a class="ghostbtn" href="#visit" data-en="Get Directions" data-es="Cómo Llegar">Get Directions</a>
       </div>
       <div class="hero-meta">
@@ -297,6 +369,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
       <li data-en="New tires going on — protect the investment" data-es="Llantas nuevas — proteja su inversión">New tires going on — protect the investment</li>
     </ul>
     <p class="note" data-en="Any of these sound familiar? → Call (303) 289-3077 and we'll check it." data-es="¿Le suena familiar? → Llame al (303) 289-3077 y lo revisamos.">Any of these sound familiar? → <a href="tel:3032893077">Call (303) 289-3077</a> and we'll check it.</p>
+    <p class="note note-sub"><button type="button" class="inline-sched" data-open-schedule data-en="Or schedule online →" data-es="O agende en línea →">Or schedule online →</button></p>
   </div>
 </section>
 
@@ -324,6 +397,10 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
         <p class="addr">The Three Amigos Auto &amp; Tire Repair<br>5590 Locust St<br>Commerce City, CO 80022</p>
         <a class="bigphone" href="tel:3032893077">(303) 289-3077</a><br>
         <a class="maplink" href="https://maps.google.com/?q=5590+Locust+St,+Commerce+City,+CO+80022" target="_blank" rel="noopener" data-en="Open in Google Maps →" data-es="Abrir en Google Maps →">Open in Google Maps →</a>
+        <div class="visit-actions">
+          <a class="callbtn" href="tel:3032893077" data-en="Call Now" data-es="Llame Ahora">Call Now</a>
+          <button type="button" class="schedbtn" data-open-schedule data-en="Schedule Appointment" data-es="Agendar Cita">Schedule Appointment</button>
+        </div>
         <p style="color:var(--dim);margin-top:18px;font-size:.95rem" data-en="Right at 56th &amp; Locust — one block off E 56th Ave, minutes from Highway 2 and Vasquez Blvd." data-es="En la esquina de 56th y Locust — a una cuadra de la E 56th Ave, a minutos de Highway 2 y Vasquez Blvd.">Right at 56th &amp; Locust — one block off E 56th Ave, minutes from Highway 2 and Vasquez Blvd.</p>
       </div>
     </div>
@@ -340,7 +417,89 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
   </div>
 </footer>
 
-<a class="sticky-call" href="tel:3032893077" data-en="📞 Tap to Call — (303) 289-3077" data-es="📞 Toque para Llamar — (303) 289-3077">📞 Tap to Call — (303) 289-3077</a>
+<div class="sticky-call">
+  <a class="sc-call" href="tel:3032893077" data-en="📞 Call" data-es="📞 Llamar">📞 Call</a>
+  <button type="button" class="sc-sched" data-open-schedule data-en="📅 Schedule" data-es="📅 Agendar">📅 Schedule</button>
+</div>
+
+<!-- Schedule modal -->
+<div class="modal-overlay" id="scheduleOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="scheduleTitle">
+    <button type="button" class="modal-close" id="scheduleCloseBtn" aria-label="Close">&times;</button>
+    <div class="modal-head">
+      <span class="eyebrow" data-en="Book your visit" data-es="Reserve su visita">Book your visit</span>
+      <h2 id="scheduleTitle" style="font-size:1.6rem;margin-top:8px" data-en="Schedule an Appointment" data-es="Agendar una Cita">Schedule an Appointment</h2>
+    </div>
+
+    <div class="modal-body">
+      <!-- Booking form view -->
+      <div id="scheduleFormView">
+
+        <div class="sched-step">
+          <div class="steplabel"><span class="num">1</span><span data-en="Pick a day" data-es="Elija un día">Pick a day</span></div>
+          <div class="day-grid" id="dayGrid"></div>
+        </div>
+
+        <div class="sched-step" id="slotStep" style="display:none">
+          <div class="steplabel"><span class="num">2</span><span data-en="Pick a time" data-es="Elija una hora">Pick a time</span></div>
+          <div class="slot-grid" id="slotGrid"></div>
+        </div>
+
+        <div class="sched-confirm" id="schedConfirm"></div>
+
+        <form name="appointment" id="scheduleForm" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?scheduled=true">
+          <input type="hidden" name="form-name" value="appointment">
+          <p class="hp-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+          <input type="hidden" name="requested_slot" id="requestedSlotHidden">
+
+          <div class="sched-step" style="margin-top:26px">
+            <div class="steplabel"><span class="num">3</span><span data-en="Your info" data-es="Su información">Your info</span></div>
+
+            <div class="field">
+              <label for="schedPreferred" data-en="Preferred day &amp; time" data-es="Día y hora preferidos">Preferred day &amp; time</label>
+              <input type="text" id="schedPreferred" name="preferred_time" placeholder="e.g. Thursday morning, or pick a slot above" data-en-placeholder="e.g. Thursday morning, or pick a slot above" data-es-placeholder="ej. Jueves por la mañana, o elija una hora arriba">
+            </div>
+
+            <div class="field">
+              <label for="schedName" data-en="Name" data-es="Nombre">Name</label>
+              <input type="text" id="schedName" name="name" required>
+            </div>
+
+            <div class="two-col">
+              <div class="field">
+                <label for="schedPhone" data-en="Phone" data-es="Teléfono">Phone</label>
+                <input type="tel" id="schedPhone" name="phone" placeholder="(303) 555-0100">
+              </div>
+              <div class="field">
+                <label for="schedEmail" data-en="Email" data-es="Correo electrónico">Email</label>
+                <input type="email" id="schedEmail" name="email" placeholder="you@example.com">
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="schedNotes" data-en="Vehicle &amp; what's going on (optional)" data-es="Vehículo y qué necesita (opcional)">Vehicle &amp; what's going on (optional)</label>
+              <textarea id="schedNotes" name="notes" data-en-placeholder="e.g. 2016 Silverado, pulls to the right. Or just tell us whatever's easiest." data-es-placeholder="ej. Silverado 2016, se jala a la derecha. O cuéntenos lo que sea más fácil." placeholder="e.g. 2016 Silverado, pulls to the right. Or just tell us whatever's easiest."></textarea>
+            </div>
+
+            <button type="submit" class="submitbtn" id="scheduleSubmitBtn" data-en="Request Appointment" data-es="Solicitar Cita">Request Appointment</button>
+            <p id="scheduleError" style="display:none;color:var(--red);font-family:'Barlow Condensed',sans-serif;font-weight:600;margin-top:10px;text-align:center" data-en="Something went wrong — please call us instead at (303) 289-3077." data-es="Algo salió mal — por favor llámenos al (303) 289-3077.">Something went wrong — please call us instead at (303) 289-3077.</p>
+          </div>
+        </form>
+
+        <div class="or-divider" data-en="Or" data-es="O">Or</div>
+        <a class="emailcta" id="emailUsLink" href="mailto:tonwondun@gmail.com?subject=Appointment%20Request%20-%20Three%20Amigos%20Auto&body=Hi%2C%20I%27d%20like%20to%20schedule%20an%20appointment.%0A%0AName%3A%0APhone%3A%0APreferred%20day%2Ftime%3A%0AVehicle%20%26%20what%27s%20going%20on%3A" data-en="✉ Email Us Directly" data-es="✉ Envíenos un Correo">✉ Email Us Directly</a>
+      </div>
+
+      <!-- Success view -->
+      <div class="sched-success" id="scheduleSuccessView">
+        <div class="check">✓</div>
+        <h3 data-en="Request Sent" data-es="Solicitud Enviada">Request Sent</h3>
+        <p style="color:var(--dim);margin-top:8px" data-en="Thanks! We'll call or email you shortly to confirm your appointment." data-es="¡Gracias! Le llamaremos o enviaremos un correo pronto para confirmar su cita.">Thanks! We'll call or email you shortly to confirm your appointment.</p>
+        <p style="margin-top:20px"><a class="callbtn" href="tel:3032893077" data-en="Or Call Us Now" data-es="O Llámenos Ahora">Or Call Us Now</a></p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -353,9 +512,171 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
       var txt = el.getAttribute('data-' + l);
       if (txt !== null) el.innerHTML = txt;
     });
+    document.querySelectorAll('[data-en-placeholder]').forEach(function(el){
+      var txt = el.getAttribute('data-' + l + '-placeholder');
+      if (txt !== null) el.setAttribute('placeholder', txt);
+    });
     btn.textContent = (l === 'en') ? 'Español' : 'English';
+    if (window.reRenderSchedule) window.reRenderSchedule();
   }
   btn.addEventListener('click', function(){ setLang(lang === 'en' ? 'es' : 'en'); });
+})();
+</script>
+
+<script>
+(function(){
+  var overlay = document.getElementById('scheduleOverlay');
+  var formView = document.getElementById('scheduleFormView');
+  var successView = document.getElementById('scheduleSuccessView');
+  var dayGrid = document.getElementById('dayGrid');
+  var slotStep = document.getElementById('slotStep');
+  var slotGrid = document.getElementById('slotGrid');
+  var confirmBox = document.getElementById('schedConfirm');
+  var preferredInput = document.getElementById('schedPreferred');
+  var requestedHidden = document.getElementById('requestedSlotHidden');
+  var form = document.getElementById('scheduleForm');
+  var submitBtn = document.getElementById('scheduleSubmitBtn');
+  var errorMsg = document.getElementById('scheduleError');
+  var lastFocused = null;
+  var selectedDate = null;
+
+  var DOW = {
+    en: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+    es: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb']
+  };
+  var MON = {
+    en: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    es: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
+  };
+  var DOW_FULL = {
+    en: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+    es: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado']
+  };
+  var SLOTS_WEEKDAY = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
+  var SLOTS_SAT = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM'];
+
+  function currentLang(){ return document.documentElement.lang === 'es' ? 'es' : 'en'; }
+
+  function buildDayGrid(){
+    dayGrid.innerHTML = '';
+    var l = currentLang();
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var shown = 0, i = 0;
+    while (shown < 14 && i < 21){
+      var d = new Date(today);
+      d.setDate(d.getDate() + i);
+      i++;
+      if (d.getDay() === 0) continue; // closed Sunday
+      shown++;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'daybtn';
+      b.innerHTML = '<span class="dow">' + DOW[l][d.getDay()] + '</span><span class="num">' + MON[l][d.getMonth()] + ' ' + d.getDate() + '</span>';
+      b.dataset.iso = d.toISOString().slice(0,10);
+      b.addEventListener('click', function(){ selectDay(this); });
+      dayGrid.appendChild(b);
+    }
+  }
+
+  function selectDay(btnEl){
+    dayGrid.querySelectorAll('.daybtn').forEach(function(b){ b.classList.remove('sel'); });
+    btnEl.classList.add('sel');
+    selectedDate = new Date(btnEl.dataset.iso + 'T00:00:00');
+    buildSlotGrid(selectedDate);
+    slotStep.style.display = 'block';
+    confirmBox.classList.remove('show');
+  }
+
+  function buildSlotGrid(date){
+    slotGrid.innerHTML = '';
+    var isSat = date.getDay() === 6;
+    var slots = isSat ? SLOTS_SAT : SLOTS_WEEKDAY;
+    slots.forEach(function(t){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'slotbtn';
+      b.textContent = t;
+      b.addEventListener('click', function(){ selectSlot(t, this); });
+      slotGrid.appendChild(b);
+    });
+  }
+
+  function selectSlot(timeLabel, btnEl){
+    slotGrid.querySelectorAll('.slotbtn').forEach(function(b){ b.classList.remove('sel'); });
+    btnEl.classList.add('sel');
+    var l = currentLang();
+    var dayName = DOW_FULL[l][selectedDate.getDay()];
+    var monName = MON[l][selectedDate.getMonth()];
+    var summary = dayName + ', ' + monName + ' ' + selectedDate.getDate() + ' ' + (l === 'es' ? 'a las ' : 'at ') + timeLabel;
+    preferredInput.value = summary;
+    requestedHidden.value = summary;
+    confirmBox.textContent = (l === 'es' ? 'Está solicitando: ' : "You're requesting: ") + summary;
+    confirmBox.classList.add('show');
+  }
+
+  window.reRenderSchedule = function(){
+    buildDayGrid();
+    slotStep.style.display = 'none';
+    confirmBox.classList.remove('show');
+  };
+
+  function openSchedule(){
+    lastFocused = document.activeElement;
+    buildDayGrid();
+    formView.style.display = '';
+    successView.classList.remove('show');
+    errorMsg.style.display = 'none';
+    submitBtn.disabled = false;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var closeBtn = document.getElementById('scheduleCloseBtn');
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeSchedule(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  }
+
+  document.querySelectorAll('[data-open-schedule]').forEach(function(el){
+    el.addEventListener('click', function(e){ e.preventDefault(); openSchedule(); });
+  });
+  document.getElementById('scheduleCloseBtn').addEventListener('click', closeSchedule);
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) closeSchedule(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeSchedule();
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var phone = document.getElementById('schedPhone').value.trim();
+    var email = document.getElementById('schedEmail').value.trim();
+    if (!phone && !email){
+      var l = currentLang();
+      alert(l === 'es' ? 'Por favor ingrese un teléfono o correo electrónico para poder contactarle.' : 'Please enter a phone number or email so we can reach you.');
+      return;
+    }
+    submitBtn.disabled = true;
+    errorMsg.style.display = 'none';
+    var data = new FormData(form);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    }).then(function(res){
+      if (!res.ok) throw new Error('Bad response: ' + res.status);
+      formView.style.display = 'none';
+      successView.classList.add('show');
+      form.reset();
+      confirmBox.classList.remove('show');
+      slotStep.style.display = 'none';
+    }).catch(function(){
+      errorMsg.style.display = 'block';
+      submitBtn.disabled = false;
+    });
+  });
 })();
 </script>
 
